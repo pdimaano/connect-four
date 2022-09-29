@@ -79,9 +79,16 @@ function makeHtmlBoard() {
 }
 
 /** findSpotForCol: given column x, return bottom empty y (null if filled) */
-
+//Input is the x (width) coordinate.
+//Functions find the lowest empty spot in the game board and returns the y (height) coordinate
 function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 5
+  //Error: does not register end column and skip a row.
+  for(let y = HEIGHT-1; y >= 0; y--){
+    if(board[x][y] === null){
+      return y;
+    }
+  }
   return 5;
 }
 
@@ -91,7 +98,7 @@ function placeInTable(y, x) {
   // TODO: make a div and insert into correct table cell
   let circlePiece = document.createElement("div");
   circlePiece.setAttribute("class", "piece");
-  let correctCell = document.getElementById(`${y}-${x}`)
+  let correctCell = document.getElementById(`${y}-${x}`);
   correctCell.append(circlePiece);
   correctCell.setAttribute("class", "p1");
 }
@@ -100,6 +107,7 @@ function placeInTable(y, x) {
 
 function endGame(msg) {
   // TODO: pop up alert message
+  return "Tie Game";
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -140,6 +148,7 @@ function handleClick(evt) {
   }
   // switch players
   // TODO: switch currPlayer 1 <-> 2
+  //assign background color - assigning 
   currPlayer = (currPlayer === 2) ? 1 : 2
 }
 
@@ -156,7 +165,20 @@ function checkForWin() {
 
     // TODO: Check four cells to see if they're all legal & all color of current
     // player
-
+    let compareCell = cells[0][0];
+    let connectWinner = board[compareCell[0]][compareCell[1]];
+    let winnerExists = false;
+    for(let i = 0; i < cells.length;i++){
+      let yCell = cells[i][0];
+      let xCell = cells[i][1];
+      if(board[yCell][xCell] === connectWinner){
+        winnerExists = true;
+      }else{
+        winnerExists = false;
+        break;
+      }
+    }
+    return `Player ${currPlayer} WINS!!!`;
   }
 
   // using HEIGHT and WIDTH, generate "check list" of coordinates
@@ -170,9 +192,10 @@ function checkForWin() {
       // [ [y, x], [y, x], [y, x], [y, x] ]
 
       let horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
-      let vert;
-      let diagDL;
-      let diagDR;
+      let vert = [[y,x],[y+1,x],[y+2,x][y+3,x]];
+      //diagDownLeft
+      let diagDL = [[y,x],[y-1,x-1],[y-2,x-2],[y-3,x-3]];
+      let diagDR = [[y,x],[y-1,x+1],[y-2,x+2],[y-3,x+3]];;
 
       // find winner (only checking each win-possibility as needed)
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
