@@ -103,14 +103,14 @@ function placeInTable(y, x) {
   circlePiece.classList.add(`p${currPlayer}`);
   let correctCell = document.getElementById(`${y}-${x}`);
   correctCell.append(circlePiece);
-  correctCell.setAttribute("class", `p${currPlayer}`);
+  //correctCell.setAttribute("class", `p${currPlayer}`);
 }
 
 /** endGame: announce game end */
 
 function endGame(msg) {
   // TODO: pop up alert message
-  return "Tie Game";
+  alert(msg);
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -147,8 +147,11 @@ function handleClick(evt) {
     }
   }
   if (result = true) {
-    endGame();
+    endGame("Tie");
   }
+  //solution had 
+  //if board[0] every(cell is truty), return endGame('Tie')
+
   // switch players
   // TODO: switch currPlayer 1 <-> 2
   //assign background color - assigning 
@@ -181,7 +184,9 @@ function checkForWin() {
         break;
       }
     }
-    return `Player ${currPlayer} WINS!!!`;
+    return winnerExists;
+
+    //solution had return cells.every so boolean statement
   }
 
   // using HEIGHT and WIDTH, generate "check list" of coordinates
@@ -196,9 +201,8 @@ function checkForWin() {
 
       let horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
       let vert = [[y,x],[y+1,x],[y+2,x][y+3,x]];
-      //diagDownLeft
-      let diagDL = [[y,x],[y-1,x-1],[y-2,x-2],[y-3,x-3]];
-      let diagDR = [[y,x],[y-1,x+1],[y-2,x+2],[y-3,x+3]];;
+      let diagDL = [[y,x],[y+1,x+1],[y+2,x+2],[y+3,x+3]];
+      let diagDR = [[y,x],[y+1,x-1],[y+2,x-2],[y+3,x-3]];;
 
       // find winner (only checking each win-possibility as needed)
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
