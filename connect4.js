@@ -85,11 +85,13 @@ function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 5
   //Error: does not register end column and skip a row.
   for(let y = HEIGHT-1; y >= 0; y--){
-    if(board[x][y] === null){
+    //change made as y is the height or which row we are on and x is the width or 
+    //the elements we are on
+    if(board[y][x] === null){
       return y;
     }
   }
-  return 5;
+  return null;
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
@@ -98,9 +100,10 @@ function placeInTable(y, x) {
   // TODO: make a div and insert into correct table cell
   let circlePiece = document.createElement("div");
   circlePiece.setAttribute("class", "piece");
+  circlePiece.classList.add(`p${currPlayer}`);
   let correctCell = document.getElementById(`${y}-${x}`);
   correctCell.append(circlePiece);
-  correctCell.setAttribute("class", "p1");
+  correctCell.setAttribute("class", `p${currPlayer}`);
 }
 
 /** endGame: announce game end */

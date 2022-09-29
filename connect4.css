@@ -11,7 +11,7 @@
 .piece {
   /* TODO: make into circles */
   border-radius: 50%;
-  background-color: blue;
+  /* background-color: blue; */
   margin: 5px;
   width: 80%;
   height: 80%;
@@ -20,6 +20,10 @@
 /* TODO: make pieces red/blue,  depending on player 1/2 piece */
 .p2 {
   background-color: red;
+}
+
+.p1{
+  background-color: blue;
 }
 
 /* column-top is table row of clickable areas for each column */
